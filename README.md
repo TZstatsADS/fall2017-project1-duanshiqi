@@ -8,10 +8,15 @@ This is the first and only *individual* (as opposed to *team*) this semester.
 
 Term: Fall 2017
 
-+ Projec title: Lorem ipsum dolor sit amet
++ Project title: U.S. Presidential Inaugural Speeches —- How did they say? What are the differences between the Republicans and the Democrats? Is Trump an alien?
+
 + This project is conducted by Shiqi Duan
 
-+ Project summary: [a short summary] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
++ Project summary: 
+The inaugural speech is the first speech of the presidents of the United States. In this project, We apply natural language processing and text mining techniques to explore what they said during their inaugural speech, what ideological values they conveyed, and what kind of emotions they expressed. Intriguingly, we identify several common patterns on their speaking strategies and interesting clusters of their topics.
+
+Once we compare the inaugural speeches of presidents in different parties, we notice some trends on their speeches. If we relate presidents' topics with the America history, we can obtain more inspiration. Based on the analysis of all the presidents, we treat Trump as our interest to see whether he is alien among U.S. presidents. 
+
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
