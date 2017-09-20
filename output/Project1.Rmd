@@ -10,7 +10,7 @@ output:
 # set path for data file
 setwd("/Users/duanshiqi/Documents/GitHub/fall2017-project1-duanshiqi/output")
 ```
->#**U.S. Presidential Inaugural Speechs**
+>#**U.S. Presidential Inaugural Speeches**
 >#**What did they say? What are the differences between the Republicans and the Democrats? Is Trump an alien?**
 <center>By Shiqi Duan</center>  
 
