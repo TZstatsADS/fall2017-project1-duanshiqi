@@ -8,7 +8,7 @@ This is the first and only *individual* (as opposed to *team*) this semester.
 
 Term: Fall 2017
 
-+ Project title: U.S. Presidential Inaugural Speeches —- How did they say? What are the differences between the Republicans and the Democrats? Is Trump an alien?
++ Project title: U.S. Presidential Inaugural Speeches —- What did they say? What are the differences between the Republicans and the Democrats? Is Trump an alien?
 
 + This project is conducted by Shiqi Duan
 
