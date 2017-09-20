@@ -8,13 +8,13 @@ output:
 
 ```{r,echo=FALSE}
 # set path for data file
-setwd("/Users/duanshiqi/Documents/GitHub/fall2017-project1-duanshiqi")
+setwd("/Users/duanshiqi/Documents/GitHub/fall2017-project1-duanshiqi/output")
 ```
 >#**U.S. Presidential Inaugural Speechs**
->#**How did they say? What are the differences between the Republicans and the Democrats? Is Trump an alien?**
-<center>By Shiqi Duan</center>  \n
+>#**What did they say? What are the differences between the Republicans and the Democrats? Is Trump an alien?**
+<center>By Shiqi Duan</center>  
 
-![US.Presidents](./figs/presidents.jpg) \n  
+![US.Presidents](../figs/presidents.jpg) 
 
 <font size=3>
 The inaugural speech is the first official speech of the presidents of the United States. In this project, we apply natural language processing and text mining techniques to explore what they said during their inaugural speech, what ideological values they conveyed, and what kind of emotions they expressed. Intriguingly, we identify several common patterns on their speaking strategies and interesting clusters of their topics.
@@ -60,25 +60,25 @@ library("RColorBrewer")
 library("ggplot2")
 library("gcookbook")
 
-source("./lib/plotstacked.R")
-source("./lib/speechFuncs.R")
+source("../lib/plotstacked.R")
+source("../lib/speechFuncs.R")
 ```
 ---
 
->##Part 1: Sentence Analysis: \n
+>##Part 1: Sentence Analysis: 
 
 First of all, we analyze the length of sentences in the inaugural speeches.
 ```{r,warning=FALSE,include=FALSE,echo=FALSE}
 ## data loading and preprocessing
-folder.path="./data/InauguralSpeeches/"
+folder.path="../data/InauguralSpeeches/"
 
 # load information and get order of president according to time
 require(xlsx)
-inau_infor<-read.xlsx("./data/InaugurationInfo.xlsx", sheetName = "Sheet1")
+inau_infor<-read.xlsx("../data/InaugurationInfo.xlsx", sheetName = "Sheet1")
 order<-paste(inau_infor$File,"-",inau_infor$Term,sep= "")  
 
 # load Inauguration Date information
-inau_date<-read.table("./data/InauguationDates.txt",header=T,na.strings="NA",sep="\t")
+inau_date<-read.table("../data/InauguationDates.txt",header=T,na.strings="NA",sep="\t")
 inau_date[c(10,13,17,21,38),2:5]<-""
 inau_date[c(26,30,33,36),2]<-""
 vec<-NULL
@@ -114,7 +114,7 @@ indx = data.frame(President.order=order,Index=1:58)
 inau_infor = cbind(indx,inau_infor)
 indx
 ```
-\n 
+
 ```{r,warning=FALSE,echo=FALSE}
 ## generate list of sentences
 # count the number of words in each sentence and assign a sequential id for sentences in each speech
@@ -157,16 +157,17 @@ beeswarm(word.count~Index,
 legend("topright",legend=levels(inau_infor$Party),fill=2:(length(levels(inau_infor$Party))+1),cex=1)
 ```
 
-The beeswarm plot shows that from George Washington to Donald Trump, presidents tend to use shorter sentences in the inaugural speeches.\n
+The beeswarm plot shows that from George Washington to Donald Trump, presidents tend to use shorter sentences in the inaugural speeches.
 
->**Reasons:**\n
+>**Reasons:**
 
 Easy to Understand
 
 Easy to Remember
 
-When they communicate with the public, they aim to effectively convey their thoughts. Listeners may have forgotten a few words that the speaker said by the end of a long sentence, or have difficulty understanding the core idea due to rambles. Short sentences make more powerful communication.\n
-From the beeswarm that there is no difference of sentence lengths among different parties.\n
+
+When they communicate with the public, they aim to effectively convey their thoughts. Listeners may have forgotten a few words that the speaker said by the end of a long sentence, or have difficulty understanding the core idea due to rambles. Short sentences make more powerful communication.
+From the beeswarm that there is no difference of sentence lengths among different parties.
 
 We focus more on the latest years and have a look at Donald Trump(58)'s speech:
 ```{r, fig.width = 6, fig.height = 5}
@@ -184,21 +185,21 @@ beeswarm(word.count~Index,
          las=2, xlab="Number of words in a sentence.", ylab="President Index",
          main="Inaugural Speeches in the Contemporary Era (1980-current)")
 ```
-<font color=white>111</font> \n
+<font color=white>111</font> 
 
-From the above picture, there is no significant differences between Trump and other presidents in the contemporary era.\n
-
----
-
-##Part 2: Topic Modeling:\n
+From the above picture, there is no significant differences between Trump and other presidents in the contemporary era.
 
 ---
 
-###2.1 Interest Words\n
+##Part 2: Topic Modeling:
 
-![WordCloud](./figs/wordcloud.jpg) \n  
+---
 
-As all the presidents may mention several common topics in their inaugural speeches. We weight their speeches by [TF-IDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) to highlight the specific interest terms for each presidents.\n
+###2.1 Interest Words
+
+![WordCloud](../figs/wordcloud.jpg)  
+
+As all the presidents may mention several common topics in their inaugural speeches. We weight their speeches by [TF-IDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) to highlight the specific interest terms for each presidents.
 
 Overview of the most popular words in all inaugural speeches:
 ```{r, fig.height=6, fig.width=6,warning=FALSE}
@@ -225,12 +226,12 @@ wordcloud(dtm.overall$term, dtm.overall$`sum(count)`,
           random.color=FALSE,
           colors=brewer.pal(9, "Accent"))
 ```
-\n
-<font color=white>111</font> \n
 
-There are a few words appearing frequently in inaugural speeches: "America", "Union", "Freedom", "Congress", "Constitution", "Revenue", "Democracy", and so on. These words show the core values of the U.S. and reflect the challenges U.S. people facing with from old times to today.\n
+<font color=white>111</font> 
 
-The Republican and Democratic are the two major parties in the U.S. these days. We take a look at what the interest words of presidents from these two parties and get some inspiration on the topics these two parties concentrate on.\n 
+There are a few words appearing frequently in inaugural speeches: "America", "Union", "Freedom", "Congress", "Constitution", "Revenue", "Democracy", and so on. These words show the core values of the U.S. and reflect the challenges U.S. people facing with from old times to today.
+
+The Republican and Democratic are the two major parties in the U.S. these days. We take a look at what the interest words of presidents from these two parties and get some inspiration on the topics these two parties concentrate on. 
 
 Interest Words among two major parties:
 ```{r, fig.height=5, fig.width=5,warning=FALSE}
@@ -266,12 +267,12 @@ wordcloud(dtm.demo$term, dtm.demo$`sum(count)`,
           random.color=FALSE,
           colors=brewer.pal(9, "Accent"))
 ```
-\n
-<font color=white>111</font> \n
 
-From the two wordclod plots, we notice that the Republicans speak only certain words much more frequently than the others: "America", "Business", "Freedom", "Law(s)", "Enforcement", and "Congress".\n
+<font color=white>111</font> 
 
-The Democrats use more words with higher frequency: "Democracy", "Union", "America", "Federal", "Today", "Millions", and so on. It seems that the Democrats have more "most interest" words than the Republicans.\n
+From the two wordclod plots, we notice that the Republicans speak only certain words much more frequently than the others: "America", "Business", "Freedom", "Law(s)", "Enforcement", and "Congress".
+
+The Democrats use more words with higher frequency: "Democracy", "Union", "America", "Federal", "Today", "Millions", and so on. It seems that the Democrats have more "most interest" words than the Republicans.
 
 Analysis of Interest words of Trump(58)'s vs. other contemporary presidents: 
 ```{r, fig.height=4, fig.width=4,warning=FALSE}
@@ -307,15 +308,15 @@ wordcloud(dtm.trump$term, dtm.trump$`sum(count)`,
           colors=brewer.pal(9, "Set1"))
 ```
 
-The wordcloud of the latest years tells us the challenges during these years, as well as the hot topics  in the latest dozens of years: "America", "Freedom", "Journey", "Women", "Children", "Century",etc. It shows us that the presidents emphasize their thoughts on the U.S. values and propose their plans to for the contemporary problems by repeating the core words.\n
+The wordcloud of the latest years tells us the challenges during these years, as well as the hot topics  in the latest dozens of years: "America", "Freedom", "Journey", "Women", "Children", "Century",etc. It shows us that the presidents emphasize their thoughts on the U.S. values and propose their plans to for the contemporary problems by repeating the core words.
 
-From Trump's Interest words, we can see he also speaks core words like "America", and mentions challenges of these days including words: "jobs", "factories", and "loyalty". There is no evidence that he speaks out of the normal inaugural speech style.\n
+From Trump's Interest words, we can see he also speaks core words like "America", and mentions challenges of these days including words: "jobs", "factories", and "loyalty". There is no evidence that he speaks out of the normal inaugural speech style.
 
-However, comparing with those highly-frequently-appearing words of the Republicans, it seems that Trump says those words not very often. He may be a non-typical "Republican Speaker".\n
+However, comparing with those highly-frequently-appearing words of the Republicans, it seems that Trump says those words not very often. He may be a non-typical "Republican Speaker".
 ---
 
 
-###2.2 Topic Allocation\n
+###2.2 Topic Allocation
 ```{r,warning=FALSE,echo=FALSE}
 ## prepare a corpus of sentence snipets with the flanking sentences
 corpus.list=sentence.list[2:(nrow(sentence.list)-1), ]
@@ -373,7 +374,7 @@ ldaOut <-LDA(dtm, k, method="Gibbs", control=list(nstart=nstart,
                                                   thin=thin))
 # write out results
 ldaOut.topics <- as.matrix(topics(ldaOut))
-write.csv(ldaOut.topics,file=paste("./output/LDAGibbs",k,"DocsToTopics.csv"))
+write.csv(ldaOut.topics,file=paste("../output/LDAGibbs",k,"DocsToTopics.csv"))
 
 # top 20 terms in each topic
 ldaOut.terms <- as.matrix(terms(ldaOut,20))
@@ -388,10 +389,10 @@ for(i in 1:k){
   topics.terms=rbind(topics.terms, ldaOut@terms[order(terms.beta[i,], decreasing = TRUE)[1:7]])
 }
 ```
-\n
-I set the topic numbers to be 10. I manually tag them as "Economy", "Patriotism", "Trust", "Liberty", "Government", "CountryRelationship", "Temporal", "Election", "People", and "Future". Because Topic 1 contains the key words: "Revenue", "Trade", and "Tax", Topic 2 contains "Spirit", "Pariot", and "Danger", Topic 3 contains "Faith", "Trust", and "Suppport",etc.\n
 
-Based on the most popular terms and the most salient terms for each topic, we assign a hashtag to each topic. \n 
+I set the topic numbers to be 10. I manually tag them as "Economy", "Patriotism", "Trust", "Liberty", "Government", "CountryRelationship", "Temporal", "Election", "People", and "Future". Because Topic 1 contains the key words: "Revenue", "Trade", and "Tax", Topic 2 contains "Spirit", "Pariot", and "Danger", Topic 3 contains "Faith", "Trust", and "Suppport",etc.
+
+Based on the most popular terms and the most salient terms for each topic, we assign a hashtag to each topic.  
 ```{r}
 topics.hash=c("Economy", "Patriotism", "Trust", "Liberty", "Government", "CountryRelationship", "Temporal", "Election", "Work&Life", "Future")
 corpus.list$ldatopic=as.vector(ldaOut.topics)
@@ -400,7 +401,7 @@ colnames(topicProbabilities)=topics.hash
 
 corpus.list.df=cbind(corpus.list, topicProbabilities)
 ```
-\n
+
 We use heatmap to see the weight allocation of topics for each president:
 ```{r,warning=FALSE,echo=FALSE,message=FALSE,fig.width=8,fig.height=6,echo=FALSE}
 
@@ -423,7 +424,7 @@ text(x=.1,y=.6,labels="Before 1864")
 text(x=.1,y=.42,labels="1864-1939")
 text(x=.1,y=.3,labels="1939 to Now")
 ```
-<font color=white>111</font> \n
+<font color=white>111</font> 
 
 Note that the red color indicates higher weights on that topic. From the heatmap, presidents in same era tends to have similar weight allocation among the topics. 
 
@@ -431,10 +432,10 @@ Before 1864, America was in the "Shaping the Nation" Era, presidents emphasized 
 
 From 1864 to 1939, America was in the "Rise to Power" Era. Presidents cared more about Economy, Election, and CountryRelationship issues. 
 
-After 1939, America has been in the "World Leader" Era, presidents pay attention to topics related to Work&life, Temporal, and Future. These days, presidents care more about people's current daily life and Ameirca's future.\n
+After 1939, America has been in the "World Leader" Era, presidents pay attention to topics related to Work&life, Temporal, and Future. These days, presidents care more about people's current daily life and Ameirca's future.
 
 Now let us look at the topic allocation among the two major parties:
-![Party](./figs/parties.jpg) \n  
+![Party](../figs/parties.jpg)   
 
 ```{r,warning=FALSE,echo=FALSE,message=FALSE}
 topic.party<-tbl_df(corpus.list.df)%>%
@@ -451,9 +452,9 @@ heatmap.2(as.matrix(topic.party[,-1]), Rowv = FALSE,
            trace = "none", density.info = "none")
 ```
 
-<font color=white>111</font> \n
+<font color=white>111</font> 
 
-From the heatmap, we see that the Republican presidents talk more about Election, Economy, and CountryRelationship, while the Democrats have a wider focus topics, including Liberty, Trust, and so on. The key words match the core thoughts in the two parties.\n
+From the heatmap, we see that the Republican presidents talk more about Election, Economy, and CountryRelationship, while the Democrats have a wider focus topics, including Liberty, Trust, and so on. The key words match the core thoughts in the two parties.
 
 To gain more sense on the topic allocation of each presidents, we cluster presidents according to the weight allocation of topics:
 ```{r}
@@ -463,15 +464,15 @@ km.res=kmeans(scale(topic.summary[,-1]), iter.max=200, centers=3)
 fviz_cluster(km.res, stand=T, repel= TRUE, data = topic.summary[,-1], show.clust.cent=FALSE)
 ```
 
-The plot gives us some confidence that presidents in the same era tend to weight more on the same topics since they are clustered together in the same topic cluster.\n
+The plot gives us some confidence that presidents in the same era tend to weight more on the same topics since they are clustered together in the same topic cluster.
 
-Notice that Trump is in the same cluster with other contemporary presidents. This gives some evidence that Trump's speech does not deviate a lot from others' in terms of topics.\n
+Notice that Trump is in the same cluster with other contemporary presidents. This gives some evidence that Trump's speech does not deviate a lot from others' in terms of topics.
 ---
 
-##Part 3: Sentiment Analysis \n
+##Part 3: Sentiment Analysis 
 
-In the last part, we will analyze the emotions expressed in the inaugural speeches. Using sentiment analysis, we can get how presidents convey their thoughts via emotional sentences to the public.\n
-We will analyze each sentence from the aspects of the eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive).\n
+In the last part, we will analyze the emotions expressed in the inaugural speeches. Using sentiment analysis, we can get how presidents convey their thoughts via emotional sentences to the public.
+We will analyze each sentence from the aspects of the eight basic emotions (anger, fear, anticipation, trust, surprise, sadness, joy, and disgust) and two sentiments (negative and positive).
 
 ![image](http://www.staffordschools.net/cms/lib011/VA01818723/Centricity/Domain/3574/character_icon.png)
 
@@ -499,7 +500,7 @@ p.all<-ggplot(data=sentence.list,aes(x=Emotion,fill=Index))+
 ggplotly(p.all)
 ```
 
-From the plot, we know that presidents tend to use sentences with anger, anticipation, and trust in general. They use fewer sentences with disgust, sadness, and very few with surprise. They want to convey more positive thoughts to the public. Presidents in the early era talked about trust a lot, while contemporary presidents choose more angry sentences.\n
+From the plot, we know that presidents tend to use sentences with anger, anticipation, and trust in general. They use fewer sentences with disgust, sadness, and very few with surprise. They want to convey more positive thoughts to the public. Presidents in the early era talked about trust a lot, while contemporary presidents choose more angry sentences.
 
 We are also interest in the emotion allocation for the two major parties:
 
@@ -509,7 +510,7 @@ p.party<-ggplot(data=filter(sentence.list,Party%in%c("Republican","Democratic"))
 ggplotly(p.party)
 ```
 
-We notice that there is no large difference of emotion allocation in these two major parties.\n
+We notice that there is no large difference of emotion allocation in these two major parties.
 
 We use Stack plot to see how Trump delivers his emotion in the inaugural speech:
 ```{r, fig.width=8, fig.height=5}
@@ -519,9 +520,9 @@ speech.df[,-1]=f.smooth.topic(x=speech.df[,1], y=speech.df[,-1])
 plot.stacked(speech.df[,1], speech.df[,2:9], 
              xlab="Sentences", ylab="Topic share", main="Donald Trump")
 ```
-We see that Trump mainly conveys anticipation, joy, and trust in his speech. His sentiment flow fluctuates and rises up to a high level at the end of his inaugural speech.\n
+We see that Trump mainly conveys anticipation, joy, and trust in his speech. His sentiment flow fluctuates and rises up to a high level at the end of his inaugural speech.
 
-Let us see how the other contemporary presidents' emotion flow behaves at their 1st-term inauguration.\n 
+Let us see how the other contemporary presidents' emotion flow behaves at their 1st-term inauguration.
 ```{r, fig.width=6, fig.height=10,echo=FALSE}
 par(mfrow=c(5, 1), mar=c(1,1,2,0), bty="n", xaxt="n", yaxt="n")
 
@@ -561,18 +562,18 @@ Reagan and George W. Bush's emotions are equally weighted along the sentences, t
 
 George Bush speaks with flat and smooth emotions but ends up with an emotional sentence emphasizing the anticipation.
 
-Both Clinton and Obama have theri emotions fluctuated during the speech. As Obama is famous for his speech skills, we can learn from the plot that his emotions fluctuates more frequently than others, and his speech is rich in different kinds of emotions. Of course, Obama speaks more positive words, especially in trust and joy.\n
+Both Clinton and Obama have theri emotions fluctuated during the speech. As Obama is famous for his speech skills, we can learn from the plot that his emotions fluctuates more frequently than others, and his speech is rich in different kinds of emotions. Of course, Obama speaks more positive words, especially in trust and joy.
 
-Comparing Trump's sentiment stak plot to the above five president's, we cannot see a big difference in Trump's speech strategy.\n
+Comparing Trump's sentiment stak plot to the above five president's, we cannot see a big difference in Trump's speech strategy.
 
 ---
 
 > ## Conclusions
 
-![Trump](./figs/title.jpg) \n
+![Trump](../figs/title.jpg) 
 
 
-* In general, presidents tend to use shorter sentences in the inaugural speeches to impress people. Their main topics are chosen according to the challenges in different historical eras. Nearly all of them speak positively in their inaugural speeches and emphasize "Trust" heavily, which reveals the nature of the inaugural speech.\n
+* In general, presidents tend to use shorter sentences in the inaugural speeches to impress people. Their main topics are chosen according to the challenges in different historical eras. Nearly all of them speak positively in their inaugural speeches and emphasize "Trust" heavily, which reveals the nature of the inaugural speech.
 
 * For presidents from the two major parties in the U.S., the Republican and the Democratic, there is no significant difference on sentence length and sentiment in their augural speeches. However, they do show difference on the key words and main topics. The Republicans have fewer key words and main topics than the Democrats. The Republicans focus on several topics like "Election" and "Economy", so speak a lot "Congress" and "Business". The Democrats have a wider interest topics including "Liberty" and "Trust", so more keys words than the Republicans.
 
@@ -581,11 +582,11 @@ Comparing Trump's sentiment stak plot to the above five president's, we cannot s
 ---
 
 <font size=1.5>
-**Reference:**  \n  
+**Reference:**   
 
-1. US.Presidents: From<https://opgrat.files.wordpress.com/2013/02/presidents-day-pruett.jpg?w=640&h=935>   \n
+1. US.Presidents: From<https://opgrat.files.wordpress.com/2013/02/presidents-day-pruett.jpg?w=640&h=935>   
 
-2. Party: From<http://cdn.playbuzz.com/cdn/09865e6c-f03e-4da7-8cd7-7d78c5ed06b7/3a4aec5b-540b-4f7d-8459-bfaeaf658601.jpg>  \n
+2. Party: From<http://cdn.playbuzz.com/cdn/09865e6c-f03e-4da7-8cd7-7d78c5ed06b7/3a4aec5b-540b-4f7d-8459-bfaeaf658601.jpg>  
 
 3. image: From<http://www.staffordschools.net/cms/lib011/VA01818723/Centricity/Domain/3574/character_icon.png)> </front>
 
